@@ -1,0 +1,8 @@
+# 统一按 LF 存进仓库，避免 Windows / Linux 混编时整文件都显示为改动
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ico binary
+*.woff binary
+*.woff2 binary
