@@ -33,6 +33,8 @@ npm run preview    # 预览构建产物
 
 ## 部署到 GitHub Pages
 
+线上地址：<https://yewindy.github.io/listen-web/>
+
 Pages 是纯静态托管，**Vite 的 `server.proxy` 只在 `npm run dev` 生效**，
 所以打包时必须用环境变量把接口指向上游直连地址，否则页面能打开但搜索全部 404。
 
@@ -44,8 +46,15 @@ VITE_API_BASE_KUWO=https://oiapi.net/api/Kuwo
 VITE_API_BASE_163=https://oiapi.net/api/Music_163
 ```
 
-推送到 `main` 分支即自动部署，`.github/workflows/deploy.yml` 会构建并发布到 Pages，
-线上地址是 `https://<用户名>.github.io/<仓库名>/`。
+发布时执行：
+
+```bash
+npm run deploy     # 等价于 npm run build && node scripts/deploy-pages.mjs
+```
+
+它会把 `dist/` 推到 `gh-pages` 分支，GitHub Pages 直接发布这个分支。
+用 `gh-pages` 分支而不是 Actions 工作流，是因为往 `.github/workflows/` 推文件
+需要额外的 `workflow` 权限，普通凭据拿不到；分支方式一条命令就能更新线上。
 
 > **关于 QQ音乐**：默认上游 `cyapi.top` 只提供 HTTP，HTTPS 页面会被浏览器按混合内容
 > 拦掉，因此发布版默认不注册这个源（界面上不会出现）。自备了支持 CORS 的 HTTPS 代理后，
